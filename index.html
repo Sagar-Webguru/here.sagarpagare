@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sagar | Full Stack Developer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f2f4f8;
+      color: #333;
+    }
+    header {
+      background: #0d1117;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav a {
+      color: #ccc;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #58a6ff;
+    }
+    .hero {
+      background: #161b22;
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.2rem;
+    }
+    section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 60px 20px;
+    }
+    h2 {
+      font-size: 2rem;
+      color: #0d1117;
+      margin-bottom: 20px;
+    }
+    .skills ul {
+      display: flex;
+      flex-wrap: wrap;
+      list-style: none;
+      gap: 15px;
+    }
+    .skills li {
+      background: #d0d7de;
+      padding: 10px 15px;
+      border-radius: 20px;
+    }
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .project {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .contact form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .contact input, .contact textarea {
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .contact button {
+      padding: 12px;
+      background: #0d1117;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .contact button:hover {
+      background: #1f6feb;
+    }
+    footer {
+      background: #0d1117;
+      color: #aaa;
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      nav a {
+        display: block;
+        margin: 10px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <h1>Hi, I'm Sagar</h1>
+    <p>Full Stack Developer | Python + PHP Enthusiast | BBA-CA Student</p>
+  </div>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>I am a passionate software developer who loves building real-world projects using full-stack technologies like PHP, MySQL, Python, and exploring frontend frameworks. Currently pursuing BBA-CA and focused on career growth in development and cybersecurity.</p>
+  </section>
+
+  <section id="skills" class="skills">
+    <h2>Skills</h2>
+    <ul>
+      <li>HTML & CSS</li>
+      <li>JavaScript</li>
+      <li>PHP & MySQL</li>
+      <li>Python</li>
+      <li>Git & GitHub</li>
+      <li>Bootstrap</li>
+      <li>SQL</li>
+      <li>Basic Excel (VLOOKUP, Pivot)</li>
+    </ul>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <div class="project">
+        <h3>Bike Rental Platform</h3>
+        <p>A complete rental system with agent approval, admin panel, and offline payment model. Built using PHP, MySQL, Bootstrap.</p>
+      </div>
+      <div class="project">
+        <h3>Survey Form</h3>
+        <p>A simple HTML/CSS form to collect user feedback. Clean UI and ready for backend integration.</p>
+      </div>
+      <div class="project">
+        <h3>Python Reporting Tool</h3>
+        <p>Python-based report generator that pulls data from MySQL and creates PDF reports for accounting use cases.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>Contact Me</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>© 2025 Sagar. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
