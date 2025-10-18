@@ -128,6 +128,37 @@ section {
   transform: scale(1.05);
   box-shadow: 0 6px 16px rgba(0,0,0,0.7);
 }
+/* About Section */
+.about-content {
+  display: flex;
+  flex-direction: row; /* side by side */
+  align-items: center;
+  gap: 2rem; /* spacing between image and text */
+  flex-wrap: wrap; /* wrap on smaller screens */
+  margin-top: 2rem;
+}
+
+.about-content img {
+  width: 250px; /* fixed width */
+  max-width: 100%; /* responsive */
+  height: auto; /* maintain aspect ratio */
+  border-radius: 10px; /* rounded corners */
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* subtle shadow */
+  object-fit: cover; /* maintain aspect for different images */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-content img:hover {
+  transform: scale(1.05); /* slight zoom on hover */
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.about-content .bio {
+  flex: 1; /* take remaining space */
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #e6edf3;
+}
 
 .skill .label {
   font-size: 1rem;
