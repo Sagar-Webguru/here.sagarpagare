@@ -10,22 +10,12 @@ backToTop?.addEventListener("click", () => {
 });
 
 // =========================
-// Mobile Menu Toggle
-// =========================
-const menuToggle = document.querySelector(".menu-toggle");
-const navLinks = document.querySelector(".nav-links");
-
-menuToggle?.addEventListener("click", () => {
-  navLinks?.classList.toggle("active");
-});
-
-// =========================
 // Dark / Light Mode with Persistence
 // =========================
 const toggleBtn = document.getElementById("mode-toggle");
 const body = document.body;
 
-// Load preference
+// Load saved theme
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme) {
   body.classList.add(savedTheme);
@@ -51,7 +41,7 @@ toggleBtn?.addEventListener("click", () => {
 });
 
 // =========================
-// Typing Effect (with pause/resume)
+// Typing Effect (About Section)
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
   const text = `I am a passionate software development student currently in my 5th semester of BBA-CA, with a strong interest in building real-world projects. I enjoy working with full-stack technologies like PHP, MySQL, Python, and exploring modern frontend frameworks. I'm also learning AI and Machine Learning to expand my skills. With a background in accounting and finance, I bring a unique perspective to developing practical solutions.`;
@@ -67,13 +57,15 @@ document.addEventListener("DOMContentLoaded", () => {
       setTimeout(type, Math.random() * 60 + 40);
     }
   }
+
   type();
 });
 
 // =========================
-// Skills Animation (on scroll, not hover)
+// Skills Animation (on scroll)
 // =========================
 const skills = document.querySelectorAll(".skill");
+const animatedSkills = new Set(); // avoid reanimating
 
 function animateSkills() {
   skills.forEach(skill => {
@@ -81,11 +73,26 @@ function animateSkills() {
     const fill = skill.querySelector(".fill");
     const percent = parseInt(skill.dataset.percent || "0", 10);
 
-    if (rect.top < window.innerHeight - 50 && fill.style.width === "0%") {
+    if (rect.top < window.innerHeight - 50 && !animatedSkills.has(skill)) {
       fill.style.width = percent + "%";
+      animatedSkills.add(skill);
     }
   });
 }
 
 window.addEventListener("scroll", animateSkills);
 window.addEventListener("load", animateSkills);
+
+// =========================
+// Optional: Smooth scrolling for nav links
+// =========================
+document.querySelectorAll('a.nav-link').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const targetId = link.getAttribute('href').substring(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
