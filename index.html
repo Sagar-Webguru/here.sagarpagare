@@ -3,126 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sagar Pagare | Full Stack Developer</title>
-  <meta name="description" content="Sagar's Portfolio | Full Stack & AI/ML Developer | Projects, Skills, Contact.">
-  <meta name="author" content="Sagar">
-  <link rel="icon" href="pic.jpg" type="image/x-icon">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <title>Sagar Pagare | Data Analyst Portfolio</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Data Analyst Portfolio - Excel, SQL, Power BI Projects">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body class="dark-mode">
 
-  <header>
-    <h1>S A G A R</h1>
-    <nav id="navbar">
-      <a href="#about" class="nav-link">About</a>
-      <a href="#skills" class="nav-link">Skills</a>
-      <a href="#work-experience" class="nav-link">Experience</a>
-      <a href="#projects" class="nav-link">Projects</a>
-      <a href="#contact" class="nav-link">Contact</a>
-    </nav>
-    <button id="mode-toggle" title="Toggle dark/light mode">
-      <i class="fas fa-moon"></i>
-    </button>
-  </header>
+<body>
 
-  <div class="hero">
-    <h1>Hi, I'm Sagar Pagare</h1>
-    <p>TY BBA-CA Student | Aspiring Full Stack & AI/ML Learner | Passionate Coder & Project Builder</p>
+<header>
+  <h1>SAGAR</h1>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Hi, I'm Sagar Pagare</h1>
+  <p>Data Analyst | Excel • SQL • Power BI</p>
+  <p>I turn raw data into meaningful insights for better decisions.</p>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About Me</h2>
+  <p>
+    I am a BBA-CA student with a strong interest in Data Analysis.
+    I specialize in Excel dashboards, SQL queries, and data visualization.
+    I enjoy solving business problems using data-driven insights.
+  </p>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <h2>Skills</h2>
+  <ul>
+    <li>Excel (Pivot Tables, Dashboards, VLOOKUP)</li>
+    <li>SQL (Joins, Queries, Data Extraction)</li>
+    <li>Power BI (Visualization, Reports)</li>
+    <li>Python (Pandas - Basic Analysis)</li>
+    <li>Data Cleaning</li>
+    <li>Data Visualization</li>
+  </ul>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <h2>Projects</h2>
+
+  <div class="project">
+    <h3>Sales Dashboard (Excel)</h3>
+    <p>
+      Created an interactive dashboard to analyze revenue, top products,
+      and monthly trends using pivot tables and charts.
+    </p>
   </div>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <div class="about-content">
-      <img src="pic.jpg" alt="Sagar's professional portrait">
-      <div class="bio">
-        <p id="typing"></p>
-      </div>
-    </div>
-  </section>
+  <div class="project">
+    <h3>Cricket Data Analysis</h3>
+    <p>
+      Analyzed player performance metrics such as strike rate and consistency
+      to derive insights from match data.
+    </p>
+  </div>
 
-  <section id="skills" class="skills">
-    <h2>Skills</h2>
-    <ul class="skills-list">
-      <li class="skill" data-percent="90"><span class="label">HTML & CSS</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="70"><span class="label">JavaScript</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="80"><span class="label">PHP & MySQL</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="50"><span class="label">Python</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="70"><span class="label">Git & GitHub</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="50"><span class="label">Bootstrap</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="60"><span class="label">SQL</span><div class="meter"><div class="fill"></div></div></li>
-      <li class="skill" data-percent="90"><span class="label">Excel (VLOOKUP, Pivot)</span><div class="meter"><div class="fill"></div></div></li>
-    </ul>
-  </section>
+  <div class="project">
+    <h3>Financial Dashboard</h3>
+    <p>
+      Built a dashboard to track expenses, profit, and budgeting insights
+      for better financial decisions.
+    </p>
+  </div>
 
-  <section id="work-experience">
-    <h2>Work Experience</h2>
-    <div class="work-experience-details">
-      <h3>Accounting and F&B Controller</h3>
-      <p>Managed financial and operational controls within accounting and food & beverage sectors. Skilled in budgeting, reporting, and vendor management.</p>
-      <p><strong>DM me if interested in collaboration!</strong></p>
-    </div>
-  </section>
+</section>
 
-  <section id="projects">
-    <h2>🚀 My Projects</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="project1.jpg" alt="Bike Rental Project Screenshot">
-        <h3>Bike Rental Platform</h3>
-        <p>A complete rental system with agent approval, admin panel, and offline payment model.</p>
-        <div class="tags"><span>PHP</span><span>MySQL</span><span>Bootstrap</span></div>
-        <div class="links"><a href="https://github.com/Sagar-Webguru/bike-rental" target="_blank">🔗 Demo</a><a href="https://github.com/Sagar-Webguru/bike-rental">💻 Code</a></div>
-      </div>
-      <div class="project-card">
-        <img src="project2.jpg" alt="Survey Form Project">
-        <h3>Survey Form</h3>
-        <p>A clean and responsive form built using HTML/CSS for collecting feedback.</p>
-        <div class="tags"><span>HTML</span><span>CSS</span></div>
-        <div class="links"><a href="#">🔗 Demo</a><a href="#">💻 Code</a></div>
-      </div>
-      <div class="project-card">
-        <img src="project2.jpg" alt="Skill Path Finder">
-        <h3>Skill Path Finder</h3>
-        <p>A clean and responsive form built using HTML/CSS for collecting feedback.</p>
-        <div class="tags"><span>HTML</span><span>CSS</span></div>
-        <div class="links"><a href="#">🔗 Demo</a><a href="#">💻 Code</a></div>
-      </div>
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact</h2>
 
-      <div class="project-card">
-        <img src="project3.jpg" alt="Python Tool Screenshot">
-        <h3>Python Reporting Tool</h3>
-        <p>Generates PDF reports from MySQL data, useful for accounting and finance teams.</p>
-        <div class="tags"><span>Python</span><span>MySQL</span><span>PDF</span></div>
-        <div class="links"><a href="#">🔗 Demo</a><a href="#">💻 Code</a></div>
-      </div>
-    </div>
-  </section>
+  <p>Let's connect for opportunities or collaboration.</p>
 
-  <section id="contact" class="contact">
-    <h2 style="text-align:center;">Get In Touch</h2>
-    <p class="contact-subtitle" style="text-align:center;">Feel free to reach out for projects, questions, or collaborations.</p>
-    <div class="social-links" style="text-align:center;">
-      <a href="https://www.linkedin.com/in/sagar-pagare-264307248"><i class="fab fa-linkedin"></i></a>
-      <a href="#"><i class="fab fa-github"></i></a>
-      <a href="#"><i class="fas fa-envelope"></i></a>
-    </div>
-    <form id="contactForm" novalidate>
-      <div class="field"><label for="name">Name</label><input id="name" name="name" placeholder="Your full name" required /></div>
-      <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" placeholder="you@example.com" required /></div>
-      <div class="field"><label for="message">Message</label><textarea id="message" name="message" placeholder="How can we help?" required></textarea></div>
-      <button type="submit">Send Message</button>
-      <p class="muted" id="formStatus" aria-live="polite"></p>
-    </form>
-  </section>
+  <div class="social">
+    <a href="https://www.linkedin.com/your-linkedin">
+      <i class="fab fa-linkedin"></i>
+    </a>
 
-  <footer>
-    <p>© 2025 Sagar. All rights reserved.</p>
-  </footer>
+    <a href="https://github.com/your-username">
+      <i class="fab fa-github"></i>
+    </a>
 
-  <button id="backToTop" title="Back to top">&#8679;</button>
-  <script src="script.js"></script>
+    <a href="mailto:your-email@gmail.com">
+      <i class="fas fa-envelope"></i>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Sagar Pagare</p>
+</footer>
+
 </body>
 </html>
