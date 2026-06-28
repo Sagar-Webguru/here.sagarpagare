@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartTools AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f8f9fb;color:#1a1a2e;min-height:100vh}
+:root{--blue:#1a237e;--gold:#ffd700;--light:#f8f9fb;--white:#fff;--border:#e2e4ea;--muted:#6b7280;--radius:10px}
+
+/* NAV */
+nav{background:var(--blue);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100}
+.nav-logo{color:var(--gold);font-weight:700;font-size:18px;letter-spacing:-0.5px}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links button{background:none;border:none;color:rgba(255,255,255,0.75);font-size:12px;cursor:pointer;padding:6px 10px;border-radius:6px;transition:all 0.15s;font-family:inherit}
+.nav-links button:hover{color:#fff;background:rgba(255,255,255,0.1)}
+.nav-links button.active{color:#fff;background:rgba(255,255,255,0.15)}
+.free-badge{background:var(--gold);color:var(--blue);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;margin-left:8px}
+
+/* AD SLOTS */
+.ad-slot{background:#f0f0f0;border:1px dashed #ccc;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#aaa;font-size:11px}
+.ad-top{width:100%;height:60px;margin-bottom:0}
+.ad-sidebar{width:250px;min-height:200px;flex-shrink:0}
+.ad-bottom{width:100%;height:50px;margin-top:0}
+.ad-label{font-size:10px;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+
+/* LAYOUT */
+.page{display:none;flex-direction:column;min-height:calc(100vh - 56px)}
+.page.active{display:flex}
+.content{flex:1;padding:24px;max-width:1100px;margin:0 auto;width:100%}
+.with-sidebar{display:flex;gap:20px}
+.main-col{flex:1;min-width:0}
+
+/* HOME */
+.hero{background:linear-gradient(135deg,var(--blue) 0%,#283593 100%);color:#fff;padding:48px 24px;text-align:center}
+.hero h1{font-size:32px;font-weight:700;margin-bottom:12px;letter-spacing:-1px}
+.hero h1 span{color:var(--gold)}
+.hero p{font-size:16px;opacity:0.85;max-width:540px;margin:0 auto 24px;line-height:1.6}
+.hero-cta{background:var(--gold);color:var(--blue);border:none;padding:12px 28px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:transform 0.15s}
+.hero-cta:hover{transform:translateY(-1px)}
+.trust-badges{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.badge{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;padding:5px 14px;border-radius:20px;font-size:12px;font-weight:500}
+
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:28px 0}
+.tool-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all 0.2s;position:relative}
+.tool-card:hover{border-color:#1a237e;transform:translateY(-2px);box-shadow:0 8px 24px rgba(26,35,126,0.1)}
+.tool-icon{font-size:28px;margin-bottom:10px}
+.tool-card h3{font-size:14px;font-weight:600;margin-bottom:6px;color:var(--blue)}
+.tool-card p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.use-btn{background:var(--blue);color:#fff;border:none;padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;width:100%}
+.use-btn:hover{background:#283593}
+
+.how-section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:28px;margin:20px 0}
+.how-section h2{font-size:18px;font-weight:700;margin-bottom:20px;color:var(--blue)}
+.steps{display:flex;gap:16px;flex-wrap:wrap}
+.step{flex:1;min-width:160px;text-align:center;padding:16px}
+.step-num{width:36px;height:36px;background:var(--blue);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin:0 auto 10px}
+.step h4{font-size:13px;font-weight:600;margin-bottom:4px}
+.step p{font-size:12px;color:var(--muted)}
+
+/* TOOL PAGES */
+.tool-header{background:var(--blue);color:#fff;padding:20px 24px;margin-bottom:24px}
+.tool-header h2{font-size:20px;font-weight:700}
+.tool-header p{font-size:13px;opacity:0.8;margin-top:4px}
+.back-btn{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:6px 14px;border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit;margin-bottom:10px}
+.back-btn:hover{background:rgba(255,255,255,0.3)}
+
+.split{display:flex;gap:20px;flex-wrap:wrap}
+.left-panel{flex:1;min-width:260px}
+.right-panel{flex:1;min-width:260px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px}
+
+/* FORM */
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:600;color:var(--blue);margin-bottom:5px}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;font-family:inherit;background:#fff;transition:border 0.15s;color:#1a1a2e}
+.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--blue)}
+.form-row{display:flex;gap:10px}
+.form-row .form-group{flex:1}
+
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#f8f9fb;border-radius:7px;margin-bottom:12px}
+.toggle{position:relative;width:40px;height:22px;cursor:pointer}
+.toggle input{opacity:0;width:0;height:0}
+.slider-tog{position:absolute;inset:0;background:#ccc;border-radius:11px;transition:0.3s}
+.slider-tog:before{content:'';position:absolute;width:16px;height:16px;left:3px;top:3px;background:#fff;border-radius:50%;transition:0.3s}
+input:checked+.slider-tog{background:var(--blue)}
+input:checked+.slider-tog:before{transform:translateX(18px)}
+
+.color-opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.color-btn{width:28px;height:28px;border-radius:50%;border:3px solid transparent;cursor:pointer;transition:border 0.15s}
+.color-btn.selected{border-color:var(--blue)}
+.size-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.size-btn{padding:5px 10px;border:1px solid var(--border);border-radius:5px;font-size:11px;cursor:pointer;background:#fff;transition:all 0.15s;font-family:inherit}
+.size-btn.selected,.size-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* PREVIEW CARD */
+.preview-box{background:#f0f0f0;border-radius:8px;overflow:hidden;margin-bottom:12px}
+.preview-label{font-size:11px;color:var(--muted);text-align:center;margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+
+/* SCHOOL ID */
+.id-templates{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.id-tpl{border:2px solid var(--border);border-radius:8px;cursor:pointer;padding:8px;text-align:center;font-size:11px;font-weight:600;transition:all 0.15s}
+.id-tpl:hover,.id-tpl.selected{border-color:var(--blue);background:#e8eaf6}
+.id-tpl-preview{height:40px;border-radius:4px;margin-bottom:4px}
+
+/* KUNDLI */
+.kundli-chart{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:#1a237e;padding:2px;border-radius:4px;margin-bottom:12px}
+.kundli-cell{background:#fff;padding:6px;font-size:10px;text-align:center;min-height:40px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px}
+.kundli-center{background:#e8eaf6;grid-column:2/4;grid-row:2/4}
+.planet-tag{background:var(--blue);color:#fff;border-radius:3px;padding:1px 4px;font-size:9px;margin:1px}
+
+/* ID CARDS */
+.id-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;margin-bottom:20px}
+.id-type-btn{border:1px solid var(--border);border-radius:8px;padding:10px 6px;text-align:center;cursor:pointer;font-size:11px;font-weight:500;background:#fff;transition:all 0.15s}
+.id-type-btn:hover,.id-type-btn.selected{border-color:var(--blue);background:#e8eaf6;color:var(--blue)}
+.id-type-btn .icon{font-size:20px;margin-bottom:4px}
+
+.upload-zone{border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;cursor:pointer;transition:all 0.2s}
+.upload-zone:hover{border-color:var(--blue);background:#f0f2ff}
+.upload-zone input{display:none}
+
+.progress-bar{background:#e2e4ea;border-radius:4px;height:8px;overflow:hidden;margin:8px 0}
+.progress-fill{height:100%;background:var(--blue);border-radius:4px;transition:width 0.5s}
+.step-status{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* PAGE MAKER */
+.a4-canvas{background:#fff;border:1px solid #ccc;border-radius:4px;width:100%;aspect-ratio:0.707;position:relative;overflow:hidden}
+.a4-img{position:absolute;border:1px solid rgba(0,0,0,0.1)}
+.cut-guide{border:1px dashed #ccc}
+.layout-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.layout-btn{padding:6px 12px;border:1px solid var(--border);border-radius:6px;font-size:12px;cursor:pointer;background:#fff;font-family:inherit;transition:all 0.15s}
+.layout-btn.selected,.layout-btn:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* EDITOR */
+.editor-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:2px solid var(--border)}
+.editor-tab{padding:9px 20px;border:none;background:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:inherit;transition:all 0.15s}
+.editor-tab.active{color:var(--blue);border-bottom-color:var(--blue)}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filter-btn{padding:5px 12px;border:1px solid var(--border);border-radius:20px;font-size:12px;cursor:pointer;background:#fff;font-family:inherit;transition:all 0.15s}
+.filter-btn.selected{background:var(--blue);color:#fff;border-color:var(--blue)}
+.slider-group{margin-bottom:10px}
+.slider-group label{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.slider-group label span{color:var(--muted)}
+.slider-group input[type=range]{width:100%}
+
+/* DOWNLOAD BTNS */
+.dl-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.dl-btn{flex:1;min-width:120px;padding:9px 16px;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;transition:all 0.15s}
+.dl-btn.primary{background:var(--blue);color:#fff}
+.dl-btn.primary:hover{background:#283593}
+.dl-btn.secondary{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+.dl-btn.secondary:hover{background:#e8eaf6}
+
+.disclaimer{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:12px 16px;font-size:11px;color:#7c6a00;margin-top:16px;line-height:1.5}
+
+/* FOOTER */
+footer{background:var(--blue);color:rgba(255,255,255,0.7);padding:24px;text-align:center;font-size:12px}
+footer a{color:rgba(255,255,255,0.85);text-decoration:none;margin:0 8px}
+
+@media(max-width:600px){.split{flex-direction:column}.nav-links .nav-links{display:none}.tools-grid{grid-template-columns:1fr 1fr}.with-sidebar{flex-direction:column}.ad-sidebar{display:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">⚡ SmartTools AI</div>
+  <div class="nav-links">
+    <button onclick="showPage('home')" class="active" id="nav-home">Home</button>
+    <button onclick="showPage('passport')" id="nav-passport">📷 Photo</button>
+    <button onclick="showPage('kundli')" id="nav-kundli">🔯 Kundli</button>
+    <button onclick="showPage('schoolid')" id="nav-schoolid">🎓 School ID</button>
+    <button onclick="showPage('editor')" id="nav-editor">✂️ Editor</button>
+    <button onclick="showPage('idcards')" id="nav-idcards">🪪 ID Cards</button>
+    <button onclick="showPage('pagemaker')" id="nav-pagemaker">📄 Page Maker</button>
+    <span class="free-badge">100% FREE</span>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="hero">
+    <h1>Free <span>AI-Powered</span> Tools</h1>
+    <p>Passport Photos, Kundli, School IDs, Photo Editor, ID Cards & Page Maker — all free, no login needed.</p>
+    <button class="hero-cta" onclick="document.getElementById('tools-section').scrollIntoView({behavior:'smooth'})">Explore Tools →</button>
+    <div class="trust-badges">
+      <span class="badge">✓ No Login</span>
+      <span class="badge">✓ 100% Free</span>
+      <span class="badge">✓ Secure & Private</span>
+      <span class="badge">✓ Download Instantly</span>
+    </div>
+  </div>
+
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+
+  <div class="content" id="tools-section">
+    <div style="display:flex;gap:20px">
+      <div class="main-col">
+        <h2 style="font-size:18px;font-weight:700;color:var(--blue);margin-bottom:4px">Our Free Tools</h2>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:16px">All tools work in your browser — no upload to server, completely private.</p>
+        <div class="tools-grid">
+          <div class="tool-card" onclick="showPage('passport')">
+            <div class="tool-icon">📷</div>
+            <h3>Passport Size Photo</h3>
+            <p>Create perfect passport-size photos with background removal and name label.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+          <div class="tool-card" onclick="showPage('kundli')">
+            <div class="tool-icon">🔯</div>
+            <h3>Free Kundli</h3>
+            <p>Generate your Kundli instantly in Hindi or English. Download as PDF.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+          <div class="tool-card" onclick="showPage('schoolid')">
+            <div class="tool-icon">🎓</div>
+            <h3>School ID Maker</h3>
+            <p>Create professional school IDs with 4 design templates. Download as PDF.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+          <div class="tool-card" onclick="showPage('editor')">
+            <div class="tool-icon">✂️</div>
+            <h3>Editor & Resizer</h3>
+            <p>Edit, filter, crop and resize your photos. Compress to target file size.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+          <div class="tool-card" onclick="showPage('idcards')">
+            <div class="tool-icon">🪪</div>
+            <h3>ID Cards AI</h3>
+            <p>Upload any of 30+ Indian ID types. Get cropped front + back + A4 page.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+          <div class="tool-card" onclick="showPage('pagemaker')">
+            <div class="tool-icon">📄</div>
+            <h3>Page Maker</h3>
+            <p>Arrange ID card front + back on A4 paper. Download as PDF or image.</p>
+            <button class="use-btn">Use Free →</button>
+          </div>
+        </div>
+
+        <div class="how-section">
+          <h2>How it works</h2>
+          <div class="steps">
+            <div class="step"><div class="step-num">1</div><h4>Upload or Enter</h4><p>Upload your photo or fill in your details</p></div>
+            <div class="step"><div class="step-num">2</div><h4>AI Processes</h4><p>Our AI instantly generates a live preview</p></div>
+            <div class="step"><div class="step-num">3</div><h4>Download Free</h4><p>Download as PNG or PDF, completely free</p></div>
+          </div>
+        </div>
+        <div class="ad-slot" style="height:90px;margin:12px 0"><div class="ad-label">Advertisement</div>300×250</div>
+      </div>
+      <div class="ad-sidebar ad-slot"><div class="ad-label">Advertisement</div>300×250</div>
+    </div>
+  </div>
+  <div class="ad-slot ad-bottom"><div class="ad-label">Ad</div>320×50</div>
+  <footer>
+    <div style="margin-bottom:8px">⚡ SmartTools AI — Free AI Tools for Everyone</div>
+    <div><a href="#">Privacy Policy</a><a href="#">Terms of Use</a><a href="#">Contact</a></div>
+    <div style="margin-top:8px;font-size:11px">© 2025 SmartTools AI. All tools for educational/preview purposes only.</div>
+  </footer>
+</div>
+
+<!-- PASSPORT PHOTO PAGE -->
+<div class="page" id="page-passport">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back to Tools</button>
+    <h2>📷 Passport Size Photo Maker</h2>
+    <p>Create perfect passport-size photos with background removal</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div class="with-sidebar">
+      <div class="main-col">
+        <div class="split">
+          <div class="left-panel">
+            <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+              <div class="form-group">
+                <label>Upload Photo</label>
+                <div class="upload-zone" onclick="document.getElementById('pp-upload').click()">
+                  <input type="file" id="pp-upload" accept="image/*" onchange="handlePassportUpload(this)">
+                  <div style="font-size:32px;margin-bottom:8px">📸</div>
+                  <div style="font-size:13px;font-weight:500">Click to upload photo</div>
+                  <div style="font-size:11px;color:var(--muted);margin-top:4px">JPG, PNG, WEBP supported</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Person's Name</label>
+                <input type="text" id="pp-name" placeholder="Enter full name" oninput="updatePassportPreview()">
+              </div>
+              <div class="toggle-row">
+                <div>
+                  <div style="font-size:13px;font-weight:500">Background Removal</div>
+                  <div style="font-size:11px;color:var(--muted)">Replace background with color</div>
+                </div>
+                <label class="toggle"><input type="checkbox" id="pp-bg-toggle" onchange="updatePassportPreview()"><span class="slider-tog"></span></label>
+              </div>
+              <div class="form-group" id="pp-bg-opts" style="display:none">
+                <label>Background Color</label>
+                <div class="color-opts">
+                  <div class="color-btn selected" style="background:#fff;border:1px solid #ddd" onclick="selectBgColor(this,'#ffffff')"></div>
+                  <div class="color-btn" style="background:#0052A5" onclick="selectBgColor(this,'#0052A5')"></div>
+                  <div class="color-btn" style="background:#cc0000" onclick="selectBgColor(this,'#cc0000')"></div>
+                  <div class="color-btn" style="background:#b0b0b0" onclick="selectBgColor(this,'#b0b0b0')"></div>
+                  <div class="color-btn" style="background:#ccf0cc;border:1px solid #ddd" onclick="selectBgColor(this,'#ccf0cc')"></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Photo Size Preset</label>
+                <div class="size-btns">
+                  <button class="size-btn selected" onclick="selectSize(this,'35x45')">35×45mm<br><span style="font-size:9px;opacity:0.7">IN Passport</span></button>
+                  <button class="size-btn" onclick="selectSize(this,'25x35')">25×35mm<br><span style="font-size:9px;opacity:0.7">Visa</span></button>
+                  <button class="size-btn" onclick="selectSize(this,'51x51')">51×51mm<br><span style="font-size:9px;opacity:0.7">US Passport</span></button>
+                  <button class="size-btn" onclick="selectSize(this,'35x35')">35×35mm<br><span style="font-size:9px;opacity:0.7">PAN Card</span></button>
+                </div>
+              </div>
+              <div class="slider-group">
+                <label>Brightness <span id="pp-bright-val">0</span></label>
+                <input type="range" min="-50" max="50" value="0" id="pp-brightness" oninput="updatePassportPreview();document.getElementById('pp-bright-val').textContent=this.value">
+              </div>
+              <div class="slider-group">
+                <label>Contrast <span id="pp-contrast-val">0</span></label>
+                <input type="range" min="-50" max="50" value="0" id="pp-contrast" oninput="updatePassportPreview();document.getElementById('pp-contrast-val').textContent=this.value">
+              </div>
+              <div class="dl-btns">
+                <button class="dl-btn primary" onclick="alert('Download: Single Photo (PNG)')">⬇ Single PNG</button>
+                <button class="dl-btn secondary" onclick="alert('Download: Sheet of 8 photos on A4')">⬇ Sheet of 8 (PDF)</button>
+              </div>
+            </div>
+          </div>
+          <div class="right-panel">
+            <div class="preview-label">Live Preview</div>
+            <div id="pp-preview" style="background:#e0e0e0;border-radius:8px;padding:16px;text-align:center;min-height:200px;display:flex;align-items:center;justify-content:center;flex-direction:column">
+              <div style="font-size:40px">👤</div>
+              <div style="font-size:12px;color:var(--muted);margin-top:8px">Upload a photo to see preview</div>
+            </div>
+            <div style="margin-top:16px">
+              <div class="preview-label">Sheet Preview (8 photos on A4)</div>
+              <div id="pp-sheet" style="background:#fff;border:1px solid #ddd;border-radius:6px;padding:10px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+                <div id="s1" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s2" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s3" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s4" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s5" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s6" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s7" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+                <div id="s8" style="background:#e0e0e0;border-radius:4px;aspect-ratio:0.77;display:flex;align-items:center;justify-content:center;font-size:18px">👤</div>
+              </div>
+              <div id="pp-name-label" style="text-align:center;font-size:11px;margin-top:6px;font-weight:600;color:var(--blue)"></div>
+            </div>
+          </div>
+        </div>
+        <div class="disclaimer">⚠️ This tool is for personal preview and educational use only. Documents generated here are NOT official government records. Do not use for fraudulent purposes.</div>
+      </div>
+      <div class="ad-sidebar ad-slot"><div class="ad-label">Advertisement</div>300×250</div>
+    </div>
+  </div>
+</div>
+
+<!-- KUNDLI PAGE -->
+<div class="page" id="page-kundli">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>🔯 Free Kundli Generator</h2>
+    <p>Generate your Kundli in Hindi or English — completely free</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div class="split">
+      <div class="left-panel">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="k-name" placeholder="Enter full name">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Date of Birth</label>
+              <input type="date" id="k-dob">
+            </div>
+            <div class="form-group">
+              <label>Time of Birth</label>
+              <input type="time" id="k-tob">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Place of Birth</label>
+            <input type="text" id="k-place" placeholder="City, State">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Gender</label>
+              <select id="k-gender"><option>Male</option><option>Female</option><option>Other</option></select>
+            </div>
+            <div class="form-group">
+              <label>Language</label>
+              <select id="k-lang" onchange="updateKundliLang()"><option value="en">English</option><option value="hi">Hindi</option></select>
+            </div>
+          </div>
+          <button class="dl-btn primary" style="width:100%;margin-top:8px" onclick="generateKundli()">🔯 Generate Kundli</button>
+          <div class="dl-btns" style="margin-top:10px">
+            <button class="dl-btn secondary" onclick="alert('Downloading Kundli as PDF...')">⬇ Download PDF</button>
+            <button class="dl-btn secondary" onclick="alert('Downloading Kundli as PNG...')">⬇ Download PNG</button>
+          </div>
+        </div>
+      </div>
+      <div class="right-panel" id="kundli-preview">
+        <div style="text-align:center;padding:20px;color:var(--muted)">
+          <div style="font-size:40px;margin-bottom:8px">🔯</div>
+          <div>Fill details and click Generate Kundli</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCHOOL ID PAGE -->
+<div class="page" id="page-schoolid">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>🎓 School ID Maker</h2>
+    <p>Create professional school ID cards with live preview</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div class="split">
+      <div class="left-panel">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+          <div class="form-group"><label>Template</label>
+            <div class="id-templates">
+              <div class="id-tpl selected" onclick="selectTemplate(this,1)"><div class="id-tpl-preview" style="background:linear-gradient(135deg,#1a237e,#3949ab)"></div>Blue Classic</div>
+              <div class="id-tpl" onclick="selectTemplate(this,2)"><div class="id-tpl-preview" style="background:linear-gradient(135deg,#2e7d32,#66bb6a)"></div>Green Modern</div>
+              <div class="id-tpl" onclick="selectTemplate(this,3)"><div class="id-tpl-preview" style="background:linear-gradient(135deg,#c62828,#ef9a9a)"></div>Red & White</div>
+              <div class="id-tpl" onclick="selectTemplate(this,4)"><div class="id-tpl-preview" style="background:linear-gradient(135deg,#0d1b2a,#1b2b4b)"></div>Navy Minimal</div>
+            </div>
+          </div>
+          <div class="form-group"><label>School Name</label><input type="text" id="s-school" placeholder="School/College Name" oninput="updateSchoolID()"></div>
+          <div class="form-group"><label>Student Name</label><input type="text" id="s-name" placeholder="Student Full Name" oninput="updateSchoolID()"></div>
+          <div class="form-row">
+            <div class="form-group"><label>Class & Section</label><input type="text" id="s-class" placeholder="e.g. 10-A" oninput="updateSchoolID()"></div>
+            <div class="form-group"><label>Roll Number</label><input type="text" id="s-roll" placeholder="e.g. 42" oninput="updateSchoolID()"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Date of Birth</label><input type="date" id="s-dob" oninput="updateSchoolID()"></div>
+            <div class="form-group"><label>Blood Group</label><select id="s-blood" onchange="updateSchoolID()"><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+          </div>
+          <div class="form-group"><label>Father's Name</label><input type="text" id="s-father" placeholder="Father's Name" oninput="updateSchoolID()"></div>
+          <div class="form-group"><label>Contact Number</label><input type="text" id="s-phone" placeholder="Phone number" oninput="updateSchoolID()"></div>
+          <div class="form-group"><label>Academic Year</label><input type="text" id="s-year" placeholder="2024-25" oninput="updateSchoolID()"></div>
+          <div class="dl-btns">
+            <button class="dl-btn primary" onclick="alert('Downloading School ID as PNG...')">⬇ Download PNG</button>
+            <button class="dl-btn secondary" onclick="alert('Downloading Front + Back as PDF...')">⬇ Download PDF</button>
+          </div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="preview-label">Live ID Card Preview</div>
+        <div id="school-id-preview" style="min-height:200px"></div>
+        <div style="margin-top:16px">
+          <div class="preview-label">Back of Card</div>
+          <div style="background:#f5f5f5;border-radius:8px;padding:12px;font-size:11px;color:var(--muted)">
+            <div style="font-weight:600;color:#333;margin-bottom:6px">Rules & Code of Conduct</div>
+            <div>• Student must carry ID card at all times</div>
+            <div>• Loss of card must be reported immediately</div>
+            <div>• Card is non-transferable</div>
+            <div style="margin-top:8px;font-weight:600;color:#333">Emergency Contact</div>
+            <div id="s-phone-back" style="margin-top:4px">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="disclaimer">⚠️ This tool is for personal preview and educational use only.</div>
+  </div>
+</div>
+
+<!-- EDITOR PAGE -->
+<div class="page" id="page-editor">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>✂️ Photo Editor & Resizer</h2>
+    <p>Edit, filter, crop and resize your photos</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div class="editor-tabs">
+      <button class="editor-tab active" onclick="switchEditorTab(this,'edit-tab')">Photo Editor</button>
+      <button class="editor-tab" onclick="switchEditorTab(this,'resize-tab')">Photo Resizer</button>
+    </div>
+    <div id="edit-tab">
+      <div class="split">
+        <div class="left-panel">
+          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+            <div class="form-group">
+              <label>Upload Image</label>
+              <div class="upload-zone" onclick="document.getElementById('ed-upload').click()" style="padding:20px">
+                <input type="file" id="ed-upload" accept="image/*" onchange="handleEditorUpload(this)">
+                <div style="font-size:24px">🖼️</div>
+                <div style="font-size:12px;margin-top:4px">Click to upload</div>
+              </div>
+            </div>
+            <div class="form-group"><label>Filters</label>
+              <div class="filter-btns">
+                <button class="filter-btn selected" onclick="applyFilter(this,'none')">Normal</button>
+                <button class="filter-btn" onclick="applyFilter(this,'grayscale(100%)')">Grayscale</button>
+                <button class="filter-btn" onclick="applyFilter(this,'sepia(100%)')">Sepia</button>
+                <button class="filter-btn" onclick="applyFilter(this,'saturate(200%)')">Vivid</button>
+                <button class="filter-btn" onclick="applyFilter(this,'hue-rotate(180deg)')">Cool</button>
+                <button class="filter-btn" onclick="applyFilter(this,'hue-rotate(30deg) saturate(150%)')">Warm</button>
+              </div>
+            </div>
+            <div class="slider-group">
+              <label>Brightness <span id="ed-b-val">100%</span></label>
+              <input type="range" min="0" max="200" value="100" oninput="updateEditorFilter(this,'brightness');document.getElementById('ed-b-val').textContent=this.value+'%'">
+            </div>
+            <div class="slider-group">
+              <label>Contrast <span id="ed-c-val">100%</span></label>
+              <input type="range" min="0" max="200" value="100" oninput="updateEditorFilter(this,'contrast');document.getElementById('ed-c-val').textContent=this.value+'%'">
+            </div>
+            <div class="slider-group">
+              <label>Saturation <span id="ed-s-val">100%</span></label>
+              <input type="range" min="0" max="300" value="100" oninput="updateEditorFilter(this,'saturate');document.getElementById('ed-s-val').textContent=this.value+'%'">
+            </div>
+            <div class="slider-group">
+              <label>Blur <span id="ed-bl-val">0px</span></label>
+              <input type="range" min="0" max="10" value="0" oninput="updateEditorFilter(this,'blur');document.getElementById('ed-bl-val').textContent=this.value+'px'">
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin:12px 0">
+              <button class="size-btn" onclick="rotateImg(-90)">↺ Rotate Left</button>
+              <button class="size-btn" onclick="rotateImg(90)">↻ Rotate Right</button>
+              <button class="size-btn" onclick="flipImg('h')">↔ Flip H</button>
+              <button class="size-btn" onclick="flipImg('v')">↕ Flip V</button>
+              <button class="size-btn" onclick="resetEditor()">Reset</button>
+            </div>
+            <button class="dl-btn primary" style="width:100%" onclick="alert('Downloading edited image...')">⬇ Download Image</button>
+          </div>
+        </div>
+        <div class="right-panel" style="display:flex;align-items:center;justify-content:center;min-height:300px">
+          <div id="editor-preview" style="text-align:center;color:var(--muted)">
+            <div style="font-size:48px">🖼️</div>
+            <div style="font-size:13px;margin-top:8px">Upload image to edit</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="resize-tab" style="display:none">
+      <div class="split">
+        <div class="left-panel">
+          <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+            <div class="form-group">
+              <label>Upload Image</label>
+              <div class="upload-zone" onclick="document.getElementById('res-upload').click()" style="padding:20px">
+                <input type="file" id="res-upload" accept="image/*">
+                <div style="font-size:24px">🖼️</div>
+                <div style="font-size:12px;margin-top:4px">Click to upload</div>
+              </div>
+            </div>
+            <div class="form-group"><label>Resize Mode</label>
+              <select id="resize-mode" onchange="document.getElementById('px-opts').style.display=this.value=='px'?'block':'none';document.getElementById('pct-opts').style.display=this.value=='pct'?'block':'none';document.getElementById('kb-opts').style.display=this.value=='kb'?'block':'none'">
+                <option value="px">By Pixels</option>
+                <option value="pct">By Percentage</option>
+                <option value="kb">By File Size</option>
+              </select>
+            </div>
+            <div id="px-opts">
+              <div class="form-row">
+                <div class="form-group"><label>Width (px)</label><input type="number" placeholder="800"></div>
+                <div class="form-group"><label>Height (px)</label><input type="number" placeholder="600"></div>
+              </div>
+              <div class="toggle-row"><div>Lock aspect ratio</div><label class="toggle"><input type="checkbox" checked><span class="slider-tog"></span></label></div>
+            </div>
+            <div id="pct-opts" style="display:none">
+              <div class="size-btns" style="margin-bottom:10px">
+                <button class="size-btn" onclick="this.classList.toggle('selected')">25%</button>
+                <button class="size-btn" onclick="this.classList.toggle('selected')">50%</button>
+                <button class="size-btn" onclick="this.classList.toggle('selected')">75%</button>
+              </div>
+              <div class="form-group"><label>Custom %</label><input type="number" placeholder="60"></div>
+            </div>
+            <div id="kb-opts" style="display:none">
+              <div class="size-btns" style="margin-bottom:10px">
+                <button class="size-btn" onclick="">50 KB</button>
+                <button class="size-btn" onclick="">100 KB</button>
+                <button class="size-btn" onclick="">200 KB</button>
+                <button class="size-btn" onclick="">500 KB</button>
+              </div>
+            </div>
+            <div class="form-group"><label>Output Format</label>
+              <div class="size-btns"><button class="size-btn selected">JPG</button><button class="size-btn">PNG</button><button class="size-btn">WEBP</button></div>
+            </div>
+            <div class="slider-group">
+              <label>Quality <span id="q-val">85</span></label>
+              <input type="range" min="1" max="100" value="85" oninput="document.getElementById('q-val').textContent=this.value">
+            </div>
+            <button class="dl-btn primary" style="width:100%;margin-top:8px" onclick="alert('Resizing and downloading image...')">⬇ Download Resized</button>
+          </div>
+        </div>
+        <div class="right-panel">
+          <div class="preview-label">Before / After</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:#f0f0f0;border-radius:8px;padding:16px;text-align:center;font-size:12px;color:var(--muted)">Original<br><div style="font-size:24px;margin-top:8px">🖼️</div><div style="margin-top:6px;font-size:11px">—</div></div>
+            <div style="background:#f0f0f0;border-radius:8px;padding:16px;text-align:center;font-size:12px;color:var(--muted)">Resized<br><div style="font-size:24px;margin-top:8px">🖼️</div><div style="margin-top:6px;font-size:11px">—</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ID CARDS PAGE -->
+<div class="page" id="page-idcards">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>🪪 ID Cards — AI Cropping & Parsing</h2>
+    <p>Upload any of 30+ Indian ID types — get cropped front, back and A4 printable page</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600;color:var(--blue);margin-bottom:12px">Step 1 — Select ID Type</div>
+      <div class="id-grid" id="id-type-grid"></div>
+    </div>
+    <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600;color:var(--blue);margin-bottom:12px">Step 2 — Upload ID Images</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:6px">Front of ID</div>
+          <div class="upload-zone" onclick="document.getElementById('id-front').click()">
+            <input type="file" id="id-front" accept="image/*" onchange="handleIDUpload(this,'front')">
+            <div style="font-size:24px">🪪</div>
+            <div style="font-size:12px;margin-top:4px">Upload Front</div>
+          </div>
+          <div id="front-preview" style="display:none;margin-top:8px"></div>
+        </div>
+        <div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:6px">Back of ID (optional)</div>
+          <div class="upload-zone" onclick="document.getElementById('id-back').click()">
+            <input type="file" id="id-back" accept="image/*" onchange="handleIDUpload(this,'back')">
+            <div style="font-size:24px">🔄</div>
+            <div style="font-size:12px;margin-top:4px">Upload Back</div>
+          </div>
+          <div id="back-preview" style="display:none;margin-top:8px"></div>
+        </div>
+      </div>
+      <button class="dl-btn primary" style="margin-top:16px;width:100%" onclick="processID()">🤖 Process with AI</button>
+    </div>
+    <div id="id-processing" style="display:none;background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px">
+      <div style="font-size:14px;font-weight:600;color:var(--blue);margin-bottom:12px">Step 3 — AI Processing</div>
+      <div id="proc-status" class="step-status">Detecting card boundaries...</div>
+      <div class="progress-bar"><div class="progress-fill" id="proc-progress" style="width:0%"></div></div>
+    </div>
+    <div id="id-output" style="display:none;background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+      <div style="font-size:14px;font-weight:600;color:var(--blue);margin-bottom:12px">Step 4 — Output</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
+        <div style="background:#f5f5f5;border-radius:8px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:600;margin-bottom:6px;color:var(--muted)">CROPPED FRONT</div><div id="out-front" style="background:#ddd;border-radius:4px;height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)">Ready</div></div>
+        <div style="background:#f5f5f5;border-radius:8px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:600;margin-bottom:6px;color:var(--muted)">CROPPED BACK</div><div id="out-back" style="background:#ddd;border-radius:4px;height:80px;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted)">Ready</div></div>
+      </div>
+      <div style="background:#f8f9fb;border-radius:8px;padding:12px;margin-bottom:12px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--blue)">Parsed Fields</div>
+        <table style="width:100%;font-size:12px;border-collapse:collapse">
+          <tr style="background:#e8eaf6"><td style="padding:5px 8px;font-weight:600">Field</td><td style="padding:5px 8px;font-weight:600">Value</td></tr>
+          <tr><td style="padding:5px 8px;border-bottom:1px solid #eee">Name</td><td style="padding:5px 8px;border-bottom:1px solid #eee;color:var(--blue)">Detected from card</td></tr>
+          <tr><td style="padding:5px 8px;border-bottom:1px solid #eee">Date of Birth</td><td style="padding:5px 8px;border-bottom:1px solid #eee;color:var(--blue)">Detected from card</td></tr>
+          <tr><td style="padding:5px 8px">ID Number</td><td style="padding:5px 8px;color:var(--blue)">Detected from card</td></tr>
+        </table>
+      </div>
+      <div class="dl-btns">
+        <button class="dl-btn primary" onclick="alert('Downloading Front PNG...')">⬇ Front PNG</button>
+        <button class="dl-btn secondary" onclick="alert('Downloading Back PNG...')">⬇ Back PNG</button>
+        <button class="dl-btn secondary" onclick="alert('Downloading A4 PDF...')">⬇ A4 PDF</button>
+        <button class="dl-btn secondary" onclick="alert('Downloading all as ZIP...')">⬇ All ZIP</button>
+      </div>
+    </div>
+    <div class="disclaimer">⚠️ This tool is for personal preview and educational use only. Documents are NOT official government records.</div>
+  </div>
+</div>
+
+<!-- PAGE MAKER -->
+<div class="page" id="page-pagemaker">
+  <div class="tool-header">
+    <button class="back-btn" onclick="showPage('home')">← Back</button>
+    <h2>📄 Page Maker</h2>
+    <p>Arrange your ID card front & back on A4 paper for printing</p>
+  </div>
+  <div class="ad-slot ad-top"><div class="ad-label">Advertisement</div>728×90</div>
+  <div class="content">
+    <div class="split">
+      <div class="left-panel">
+        <div style="background:#fff;border:1px solid var(--border);border-radius:12px;padding:20px">
+          <div class="form-group">
+            <label>Upload Front of ID</label>
+            <div class="upload-zone" onclick="document.getElementById('pm-front').click()" style="padding:16px">
+              <input type="file" id="pm-front" accept="image/*" onchange="handlePMUpload(this,'front')">
+              <div>📤 Upload Front</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Upload Back of ID (optional)</label>
+            <div class="upload-zone" onclick="document.getElementById('pm-back').click()" style="padding:16px">
+              <input type="file" id="pm-back" accept="image/*" onchange="handlePMUpload(this,'back')">
+              <div>📤 Upload Back</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Layout Preset</label>
+            <div class="layout-btns">
+              <button class="layout-btn selected" onclick="selectLayout(this,'front-only')">Front Only</button>
+              <button class="layout-btn" onclick="selectLayout(this,'front-back')">Front + Back</button>
+              <button class="layout-btn" onclick="selectLayout(this,'2x-front')">2× Front</button>
+              <button class="layout-btn" onclick="selectLayout(this,'4x')">4 Cards</button>
+            </div>
+          </div>
+          <div class="slider-group">
+            <label>Card Scale <span id="pm-scale-val">100%</span></label>
+            <input type="range" min="50" max="150" value="100" oninput="document.getElementById('pm-scale-val').textContent=this.value+'%';updatePageMaker()">
+          </div>
+          <div class="form-group">
+            <label>Page Background</label>
+            <div class="size-btns">
+              <button class="size-btn selected" onclick="setPMBg(this,'#fff')">White</button>
+              <button class="size-btn" onclick="setPMBg(this,'#f5f5f5')">Light Grey</button>
+              <button class="size-btn" onclick="setPMBg(this,'#fff8e1')">Cream</button>
+            </div>
+          </div>
+          <div class="toggle-row">
+            <div style="font-size:13px;font-weight:500">Show Cut Guides</div>
+            <label class="toggle"><input type="checkbox" id="pm-guides" onchange="updatePageMaker()"><span class="slider-tog"></span></label>
+          </div>
+          <div class="dl-btns" style="margin-top:16px">
+            <button class="dl-btn primary" onclick="alert('Downloading print-ready A4 PDF...')">⬇ Download PDF</button>
+            <button class="dl-btn secondary" onclick="alert('Downloading A4 as PNG...')">⬇ Download PNG</button>
+          </div>
+        </div>
+      </div>
+      <div class="right-panel">
+        <div class="preview-label">A4 Page Preview</div>
+        <div class="a4-canvas" id="a4-canvas" style="background:#fff">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px">
+            <div id="pm-card1" style="width:80%;max-width:260px;height:80px;background:#e0e0e0;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)">Front of ID Card</div>
+            <div id="pm-card2" style="width:80%;max-width:260px;height:80px;background:#eeeeee;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--muted)">Back of ID Card</div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);text-align:center;margin-top:8px">A4 (210 × 297 mm) — Print-ready layout</div>
+      </div>
+    </div>
+    <div class="disclaimer">⚠️ This tool is for personal preview and educational use only.</div>
+  </div>
+</div>
+
+<script>
+var currentPage='home';
+var editorFilters={brightness:100,contrast:100,saturate:100,blur:0,base:'none'};
+var passportImg=null;
+var selectedBgColor='#ffffff';
+var selectedTpl=1;
+var pmLayout='front-only';
+var pmBg='#fff';
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));
+  var pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  var nb=document.getElementById('nav-'+id);
+  if(nb)nb.classList.add('active');
+  currentPage=id;
+  window.scrollTo(0,0);
+}
+
+function handlePassportUpload(input){
+  if(!input.files[0])return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    passportImg=e.target.result;
+    var prev=document.getElementById('pp-preview');
+    prev.innerHTML='<img src="'+e.target.result+'" style="max-width:100%;max-height:200px;border-radius:6px">';
+    var bgOn=document.getElementById('pp-bg-toggle').checked;
+    if(bgOn)prev.style.background=selectedBgColor;
+    for(var i=1;i<=8;i++){
+      document.getElementById('s'+i).innerHTML='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:3px">';
+    }
+    updatePassportPreview();
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function updatePassportPreview(){
+  var bgOn=document.getElementById('pp-bg-toggle').checked;
+  document.getElementById('pp-bg-opts').style.display=bgOn?'block':'none';
+  var name=document.getElementById('pp-name').value;
+  document.getElementById('pp-name-label').textContent=name||'';
+  document.getElementById('s-phone-back');
+}
+
+function selectBgColor(el,color){
+  document.querySelectorAll('.color-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedBgColor=color;
+  if(document.getElementById('pp-bg-toggle').checked){
+    document.getElementById('pp-preview').style.background=color;
+  }
+}
+
+function selectSize(el,size){
+  document.querySelectorAll('.size-btn').forEach(b=>{if(b.parentElement.className==='size-btns')b.classList.remove('selected')});
+  el.classList.add('selected');
+}
+
+var PLANETS_EN=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+var PLANETS_HI=['सूर्य','चंद्र','मंगल','बुध','गुरु','शुक्र','शनि','राहु','केतु'];
+var RASHI_EN=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+var RASHI_HI=['मेष','वृष','मिथुन','कर्क','सिंह','कन्या','तुला','वृश्चिक','धनु','मकर','कुंभ','मीन'];
+
+function generateKundli(){
+  var name=document.getElementById('k-name').value||'Your Name';
+  var dob=document.getElementById('k-dob').value||'--';
+  var tob=document.getElementById('k-tob').value||'--';
+  var place=document.getElementById('k-place').value||'--';
+  var lang=document.getElementById('k-lang').value;
+  var planets=lang==='hi'?PLANETS_HI:PLANETS_EN;
+  var rashis=lang==='hi'?RASHI_HI:RASHI_EN;
+  var lagna=lang==='hi'?'लग्न':'Lagna';
+  var sun=lang==='hi'?'सूर्य राशि':'Sun Sign';
+  
+  var seed=name.length+(new Date(dob)||new Date()).getMonth();
+  var lagnaIdx=seed%12;
+  var planetData=planets.map(function(p,i){
+    return{name:p,rashi:rashis[(lagnaIdx+i*2)%12],house:((i*3)%12)+1};
+  });
+
+  var houseContent=[];
+  for(var h=1;h<=12;h++){houseContent.push('');}
+  planetData.forEach(function(p){
+    houseContent[p.house-1]+='<span class="planet-tag">'+p.name.substring(0,2)+'</span>';
+  });
+
+  var cells=[
+    houseContent[11],houseContent[0],houseContent[1],houseContent[2],
+    houseContent[10],'CENTER',houseContent[3],
+    houseContent[9],'CENTER',houseContent[4],
+    houseContent[8],houseContent[7],houseContent[6],houseContent[5]
+  ];
+
+  var chartHtml='<div class="kundli-chart">';
+  var centerDone=false;
+  for(var i=0;i<16;i++){
+    var r=Math.floor(i/4),c=i%4;
+    var isCenter=(r===1||r===2)&&(c===1||c===2);
+    if(isCenter&&!centerDone){
+      chartHtml+='<div class="kundli-cell kundli-center" style="grid-column:2/4;grid-row:2/4;font-size:10px;font-weight:600;color:var(--blue)">'+name+'<br><small>'+rashis[lagnaIdx]+' '+lagna+'</small></div>';
+      centerDone=true;
+    }else if(!isCenter){
+      var cellIdx=r<2?(r*4+c):(r===2?8+c:12+c);
+      var ci=[0,1,2,3,10,3,9,4,8,7,6,5];
+      chartHtml+='<div class="kundli-cell" style="font-size:10px">'+houseContent[ci[Object.keys(houseContent)[0]]||0]+'</div>';
+    }
+  }
+  chartHtml+='</div>';
+
+  var rowsHtml=planetData.map(function(p,i){
+    return'<tr><td style="padding:4px 8px;border-bottom:1px solid #eee">'+p.name+'</td><td style="padding:4px 8px;border-bottom:1px solid #eee">'+p.rashi+'</td><td style="padding:4px 8px;border-bottom:1px solid #eee">'+(15+i*20)+'°</td><td style="padding:4px 8px;border-bottom:1px solid #eee">'+p.house+'</td></tr>';
+  }).join('');
+
+  document.getElementById('kundli-preview').innerHTML=
+    '<div style="border:2px solid var(--blue);border-radius:8px;overflow:hidden">'+
+    '<div style="background:var(--blue);color:#fff;padding:12px;text-align:center">'+
+      '<div style="font-size:16px;font-weight:700">'+name+'</div>'+
+      '<div style="font-size:11px;opacity:0.8;margin-top:2px">'+dob+' • '+tob+' • '+place+'</div>'+
+    '</div>'+
+    '<div style="padding:12px">'+
+      '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:8px">'+
+        (lang==='hi'?'जन्म कुंडली (उत्तर भारतीय)':'Birth Chart (North Indian Style)')+
+      '</div>'+
+      '<div class="kundli-chart">'+
+        '<div class="kundli-cell">'+houseContent[11]+'<small style="color:var(--muted)">12</small></div>'+
+        '<div class="kundli-cell">'+houseContent[0]+'<small style="color:var(--muted)">1</small></div>'+
+        '<div class="kundli-cell">'+houseContent[1]+'<small style="color:var(--muted)">2</small></div>'+
+        '<div class="kundli-cell">'+houseContent[2]+'<small style="color:var(--muted)">3</small></div>'+
+        '<div class="kundli-cell">'+houseContent[10]+'<small style="color:var(--muted)">11</small></div>'+
+        '<div class="kundli-cell kundli-center" style="text-align:center;font-size:10px;font-weight:600;color:var(--blue)">'+name+'<br><small style="color:var(--muted)">'+rashis[lagnaIdx]+'</small></div>'+
+        '<div class="kundli-cell">'+houseContent[3]+'<small style="color:var(--muted)">4</small></div>'+
+        '<div class="kundli-cell">'+houseContent[9]+'<small style="color:var(--muted)">10</small></div>'+
+        '<div class="kundli-cell">'+houseContent[4]+'<small style="color:var(--muted)">5</small></div>'+
+        '<div class="kundli-cell">'+houseContent[8]+'<small style="color:var(--muted)">9</small></div>'+
+        '<div class="kundli-cell">'+houseContent[7]+'<small style="color:var(--muted)">8</small></div>'+
+        '<div class="kundli-cell">'+houseContent[6]+'<small style="color:var(--muted)">7</small></div>'+
+        '<div class="kundli-cell">'+houseContent[5]+'<small style="color:var(--muted)">6</small></div>'+
+      '</div>'+
+      '<div style="margin-top:12px">'+
+        '<div style="font-size:12px;font-weight:700;color:var(--blue);margin-bottom:6px">'+
+          (lang==='hi'?'ग्रह स्थिति':'Planet Positions')+
+        '</div>'+
+        '<table style="width:100%;font-size:11px;border-collapse:collapse">'+
+          '<tr style="background:#e8eaf6"><td style="padding:4px 8px;font-weight:600">'+(lang==='hi'?'ग्रह':'Planet')+'</td><td style="padding:4px 8px;font-weight:600">'+(lang==='hi'?'राशि':'Rashi')+'</td><td style="padding:4px 8px;font-weight:600">'+(lang==='hi'?'अंश':'Degree')+'</td><td style="padding:4px 8px;font-weight:600">'+(lang==='hi'?'भाव':'House')+'</td></tr>'+
+          rowsHtml+
+        '</table>'+
+      '</div>'+
+    '</div>'+
+    '</div>';
+}
+
+var tplColors=[['#1a237e','#3949ab'],['#2e7d32','#66bb6a'],['#c62828','#ef9a9a'],['#0d1b2a','#1b2b4b']];
+
+function selectTemplate(el,num){
+  document.querySelectorAll('.id-tpl').forEach(t=>t.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTpl=num;
+  updateSchoolID();
+}
+
+function updateSchoolID(){
+  var school=document.getElementById('s-school').value||'School Name';
+  var name=document.getElementById('s-name').value||'Student Name';
+  var cls=document.getElementById('s-class').value||'Class';
+  var roll=document.getElementById('s-roll').value||'—';
+  var dob=document.getElementById('s-dob').value||'—';
+  var blood=document.getElementById('s-blood').value||'A+';
+  var father=document.getElementById('s-father').value||'Father Name';
+  var phone=document.getElementById('s-phone').value||'—';
+  var year=document.getElementById('s-year').value||'2024-25';
+  
+  document.getElementById('s-phone-back').textContent=phone;
+  
+  var c=tplColors[selectedTpl-1];
+  var isVertical=selectedTpl===3;
+  
+  document.getElementById('school-id-preview').innerHTML=
+    '<div style="background:#fff;border-radius:10px;overflow:hidden;border:1px solid #ddd;max-width:280px">'+
+      '<div style="background:linear-gradient(135deg,'+c[0]+','+c[1]+');padding:14px;text-align:center">'+
+        '<div style="font-size:14px;font-weight:700;color:#fff">'+school+'</div>'+
+        '<div style="font-size:10px;color:rgba(255,255,255,0.75);margin-top:2px">Student Identity Card</div>'+
+      '</div>'+
+      '<div style="padding:12px;display:flex;gap:10px;align-items:flex-start">'+
+        '<div style="width:52px;height:64px;background:#e0e0e0;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px">👤</div>'+
+        '<div style="flex:1;font-size:11px">'+
+          '<div style="font-size:13px;font-weight:700;color:'+c[0]+';margin-bottom:6px">'+name+'</div>'+
+          '<div style="display:grid;grid-template-columns:auto 1fr;gap:3px 8px;color:#555">'+
+            '<span style="color:#999">Class</span><span>'+cls+'</span>'+
+            '<span style="color:#999">Roll No</span><span>'+roll+'</span>'+
+            '<span style="color:#999">DOB</span><span>'+dob+'</span>'+
+            '<span style="color:#999">Blood</span><span style="color:#c00;font-weight:600">'+blood+'</span>'+
+            '<span style="color:#999">Father</span><span>'+father+'</span>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div style="background:'+c[0]+';padding:6px 12px;display:flex;justify-content:space-between;align-items:center">'+
+        '<div style="font-size:10px;color:rgba(255,255,255,0.8)">'+year+'</div>'+
+        '<div style="font-size:10px;color:rgba(255,255,255,0.8)">'+phone+'</div>'+
+      '</div>'+
+    '</div>';
+}
+
+function handleEditorUpload(input){
+  if(!input.files[0])return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('editor-preview').innerHTML=
+      '<img id="ed-img" src="'+e.target.result+'" style="max-width:100%;max-height:300px;border-radius:8px">';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+var edFilter='none';
+var edBrightness=100,edContrast=100,edSaturate=100,edBlur=0;
+
+function applyFilter(btn,filter){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  edFilter=filter;
+  applyEditorCSS();
+}
+
+function updateEditorFilter(input,prop){
+  if(prop==='brightness')edBrightness=input.value;
+  if(prop==='contrast')edContrast=input.value;
+  if(prop==='saturate')edSaturate=input.value;
+  if(prop==='blur')edBlur=input.value;
+  applyEditorCSS();
+}
+
+function applyEditorCSS(){
+  var img=document.getElementById('ed-img');
+  if(!img)return;
+  var f='brightness('+edBrightness+'%) contrast('+edContrast+'%) saturate('+edSaturate+'%) blur('+edBlur+'px)';
+  if(edFilter!=='none')f=edFilter+' '+f;
+  img.style.filter=f;
+}
+
+function rotateImg(deg){alert('Rotating image by '+deg+'°...');}
+function flipImg(dir){alert('Flipping image '+(dir==='h'?'horizontally':'vertically')+'...');}
+function resetEditor(){
+  edFilter='none';edBrightness=100;edContrast=100;edSaturate=100;edBlur=0;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('selected'));
+  document.querySelector('.filter-btn').classList.add('selected');
+  applyEditorCSS();
+}
+
+function switchEditorTab(btn,tabId){
+  document.querySelectorAll('.editor-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('edit-tab').style.display=tabId==='edit-tab'?'block':'none';
+  document.getElementById('resize-tab').style.display=tabId==='resize-tab'?'block':'none';
+}
+
+var ID_TYPES=[
+  {icon:'🪪',name:'Aadhaar'},{icon:'💳',name:'PAN Card'},{icon:'🗳️',name:'Voter ID'},
+  {icon:'🚗',name:'Driving License'},{icon:'📘',name:'Passport'},{icon:'💉',name:'Vaccine Cert'},
+  {icon:'🏗️',name:'E-Shram'},{icon:'🏥',name:'ABHA'},{icon:'❤️',name:'Ayushman'},
+  {icon:'🌾',name:'Jan Aadhaar'},{icon:'🧱',name:'BOCW'},{icon:'🤝',name:'Sambal 2.0'},
+  {icon:'🍱',name:'Ration Card'},{icon:'👴',name:'Senior Citizen'},{icon:'🎓',name:'Student ID'},
+  {icon:'💼',name:'Employee ID'},{icon:'📰',name:'Press Card'},{icon:'⚖️',name:'Bar Council'},
+  {icon:'🏥',name:'Medical Council'},{icon:'📄',name:'Income Cert'},{icon:'📜',name:'Caste Cert'},
+  {icon:'🏡',name:'Domicile Cert'},{icon:'👶',name:'Birth Cert'},{icon:'💒',name:'Marriage Cert'},
+  {icon:'✝️',name:'Death Cert'},{icon:'🏦',name:'Bank Passbook'},{icon:'🚂',name:'Railway Pass'},
+  {icon:'🪙',name:'BPL Card'},{icon:'👷',name:'Labour Card'},{icon:'♿',name:'Disability Cert'}
+];
+
+var selectedIDType=null;
+(function initIDGrid(){
+  var grid=document.getElementById('id-type-grid');
+  if(!grid)return;
+  grid.innerHTML=ID_TYPES.map(function(t,i){
+    return'<div class="id-type-btn" onclick="selectIDType(this,'+i+')"><div class="icon">'+t.icon+'</div>'+t.name+'</div>';
+  }).join('');
+})();
+
+function selectIDType(el,idx){
+  document.querySelectorAll('.id-type-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedIDType=idx;
+}
+
+function handleIDUpload(input,side){
+  if(!input.files[0])return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var div=document.getElementById(side+'-preview');
+    div.style.display='block';
+    div.innerHTML='<img src="'+e.target.result+'" style="width:100%;border-radius:6px">';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function processID(){
+  var proc=document.getElementById('id-processing');
+  var out=document.getElementById('id-output');
+  proc.style.display='block';out.style.display='none';
+  var steps=['Detecting card boundaries...','Cropping to card edges...','Parsing fields...','Generating output...'];
+  var progress=[25,50,75,100];
+  var i=0;
+  function nextStep(){
+    if(i<steps.length){
+      document.getElementById('proc-status').textContent=steps[i];
+      document.getElementById('proc-progress').style.width=progress[i]+'%';
+      i++;
+      setTimeout(nextStep,800);
+    }else{
+      proc.style.display='none';
+      out.style.display='block';
+    }
+  }
+  nextStep();
+}
+
+function handlePMUpload(input,side){
+  if(!input.files[0])return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var el=document.getElementById('pm-card'+(side==='front'?1:2));
+    el.style.background='transparent';
+    el.innerHTML='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:contain;border-radius:4px">';
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function selectLayout(btn,layout){
+  document.querySelectorAll('.layout-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  pmLayout=layout;
+  updatePageMaker();
+}
+
+function setPMBg(btn,color){
+  document.querySelectorAll('.size-btns .size-btn').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  pmBg=color;
+  document.getElementById('a4-canvas').style.background=color;
+}
+
+function updatePageMaker(){
+  var guides=document.getElementById('pm-guides').checked;
+  var c1=document.getElementById('pm-card1');
+  var c2=document.getElementById('pm-card2');
+  if(guides){c1.style.border='2px dashed #ccc';c2.style.border='2px dashed #ccc';}
+  else{c1.style.border='none';c2.style.border='none';}
+  document.getElementById('a4-canvas').style.background=pmBg;
+}
+</script>
+</body>
+</html>
